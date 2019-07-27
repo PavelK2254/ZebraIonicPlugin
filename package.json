@@ -1,0 +1,17 @@
+{
+  "name": "cordova-zebra-plugin",
+  "version": "0.0.1",
+  "description": "Zebra printer plugin",
+  "cordova": {
+    "id": "cordova-zebra-plugin",
+    "platforms": [
+      "android"
+    ]
+  },
+  "keywords": [
+    "ecosystem:cordova",
+    "cordova-android"
+  ],
+  "author": "pavel4567@gmail.com",
+  "license": "MIT"
+}

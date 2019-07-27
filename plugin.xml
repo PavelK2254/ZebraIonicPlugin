@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='utf-8'?>
+<plugin id="cordova-zebra-plugin" version="0.0.1" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
+  <name>ZebraPlugin</name>
+  <js-module name="ZebraPlugin" src="www/ZebraPlugin.js"><clobbers target="cordova.plugins.ZebraPlugin"/></js-module>
+  <platform name="android">
+    <config-file parent="/*" target="res/xml/config.xml">
+      <feature name="ZebraPlugin"><param name="android-package" value="cordova-zebra-plugin.ZebraPlugin"/></feature>
+    </config-file>
+    <framework custom="true" src="src/android/zebra-gradle.gradle" type="gradleReference" />
+    <config-file parent="/*" target="AndroidManifest.xml"></config-file><source-file src="src/android/ZebraPlugin.java" target-dir="src/cordova-zebra-plugin/ZebraPlugin"/></platform>
+</plugin>

@@ -1,0 +1,25 @@
+apply plugin: 'java-library'
+
+
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation files('libs/commons-io-2.2.jar')
+    implementation files('libs/commons-lang3-3.4.jar')
+    implementation files('libs/commons-net-3.1.jar')
+    implementation files('libs/commons-validator-1.4.0.jar')
+    implementation files('libs/core-1.53.0.0.jar')
+    implementation files('libs/httpcore-4.3.1.jar')
+    implementation files('libs/httpmime-4.3.2.jar')
+    implementation files('libs/jackson-annotations-2.2.3.jar')
+    implementation files('libs/jackson-core-2.2.3.jar')
+    implementation files('libs/jackson-databind-2.2.3.jar')
+    implementation files('libs/opencsv-2.2.jar')
+    implementation files('libs/pkix-1.53.0.0.jar')
+    implementation files('libs/prov-1.53.0.0.jar')
+    implementation files('libs/snmp6_1z.jar')
+    implementation files('libs/ZSDK_ANDROID_API.jar')
+}
+
+sourceCompatibility = "7"
+targetCompatibility = "7"
