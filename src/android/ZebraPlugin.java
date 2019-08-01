@@ -42,7 +42,7 @@ public class ZebraPlugin extends CordovaPlugin {
                             e.printStackTrace();
                             callbackContext.error(e);
                         }
-                    },CallbackContext callbackContext)
+                    },CallbackContext callbackContext);
   }
 
     @Override
@@ -53,13 +53,13 @@ public class ZebraPlugin extends CordovaPlugin {
             return true;
         }else if (action.equals("sendCpclOverTcp")) {
           String ip = args.getString(0);
-          this.sendZplOverTcp(ip)
+          this.sendZplOverTcp(ip);
         }else if (action.equals("sendZplOverTcp")) {
           String ip = args.getString(0);
-          this.sendCpclOverTcp(ip)
+          this.sendCpclOverTcp(ip);
         }else if (action.equals("printConfigLabelUsingDnsName")) {
           String dnsName = args.getString(0);
-          this.printConfigLabelUsingDnsName(dnsName)
+          this.printConfigLabelUsingDnsName(dnsName);
         }
         return false;
     }
