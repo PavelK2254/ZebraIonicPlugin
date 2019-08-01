@@ -22,7 +22,7 @@ public class ZebraPlugin extends CordovaPlugin {
                             e.printStackTrace();
                             callbackContext.error(e);
                         }
-                    }, callbackContext);
+                    });
   }
 
   public void sendCpclOverTcp(final String theIpAddress,CallbackContext callbackContext){
@@ -32,7 +32,7 @@ public class ZebraPlugin extends CordovaPlugin {
                             e.printStackTrace();
                             callbackContext.error(e);
                         }
-                    }, callbackContext);
+                    });
   }
 
   public void printConfigLabelUsingDnsName(final String dnsName,CallbackContext callbackContext){
@@ -42,7 +42,7 @@ public class ZebraPlugin extends CordovaPlugin {
                             e.printStackTrace();
                             callbackContext.error(e);
                         }
-                    }, callbackContext);
+                    });
   }
 
     @Override
