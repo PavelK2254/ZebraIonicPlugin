@@ -15,34 +15,34 @@ public class ZebraPlugin extends CordovaPlugin {
 
   MainExecutor mMainExecutor = new MainExecutor();
 
-  public void sendZplOverTcp(final String theIpAddress){
+  public void sendZplOverTcp(final String theIpAddress,CallbackContext callbackContext){
     mMainExecutor.sendZplOverTcp(theIpAddress,new MainExecutor.errorReporter() {
                         @Override
                         public void onError(Exception e) {
                             e.printStackTrace();
                             callbackContext.error(e);
                         }
-                    },CallbackContext callbackContext);
+                    }, callbackContext);
   }
 
-  public void sendCpclOverTcp(final String theIpAddress){
+  public void sendCpclOverTcp(final String theIpAddress,CallbackContext callbackContext){
     mMainExecutor.sendCpclOverTcp(theIpAddress,new MainExecutor.errorReporter() {
                         @Override
                         public void onError(Exception e) {
                             e.printStackTrace();
                             callbackContext.error(e);
                         }
-                    },CallbackContext callbackContext);
+                    }, callbackContext);
   }
 
-  public void printConfigLabelUsingDnsName(final String dnsName){
+  public void printConfigLabelUsingDnsName(final String dnsName,CallbackContext callbackContext){
       mMainExecutor.printConfigLabelUsingDnsName(dnsName,new MainExecutor.errorReporter() {
                         @Override
                         public void onError(Exception e) {
                             e.printStackTrace();
                             callbackContext.error(e);
                         }
-                    },CallbackContext callbackContext);
+                    }, callbackContext);
   }
 
     @Override
@@ -53,13 +53,13 @@ public class ZebraPlugin extends CordovaPlugin {
             return true;
         }else if (action.equals("sendCpclOverTcp")) {
           String ip = args.getString(0);
-          this.sendZplOverTcp(ip);
+          this.sendZplOverTcp(ip,callbackContext);
         }else if (action.equals("sendZplOverTcp")) {
           String ip = args.getString(0);
-          this.sendCpclOverTcp(ip);
+          this.sendCpclOverTcp(ip,callbackContext);
         }else if (action.equals("printConfigLabelUsingDnsName")) {
           String dnsName = args.getString(0);
-          this.printConfigLabelUsingDnsName(dnsName);
+          this.printConfigLabelUsingDnsName(dnsName,callbackContext);
         }
         return false;
     }
