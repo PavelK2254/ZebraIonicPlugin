@@ -6,11 +6,12 @@
     <config-file parent="/*" target="res/xml/config.xml">
       <feature name="ZebraPlugin"><param name="android-package" value="cordova-zebra-plugin.ZebraPlugin"/></feature>
       <feature name="MainExecutor"><param name="android-package" value="cordova-zebra-plugin.MainExecutor"/></feature>
-
+      <feature name="TCPConnectionManager"><param name="android-package" value="cordova-zebra-plugin.TCPConnectionManager"/></feature>
     </config-file>
     <framework custom="true" src="src/android/zebra-gradle.gradle" type="gradleReference"/>
     <config-file parent="/*" target="AndroidManifest.xml"></config-file>
     <source-file src="src/android/ZebraPlugin.java" target-dir="src/cordova-zebra-plugin/ZebraPlugin"/>
     <source-file src="src/android/MainExecutor.java" target-dir="src/cordova-zebra-plugin/MainExecutor"/>
+    <source-file src="src/android/TCPConnectionManager.java" target-dir="src/cordova-zebra-plugin/TCPConnectionManager"/>
   </platform>
 </plugin>
