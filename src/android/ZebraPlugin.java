@@ -20,7 +20,7 @@ public class ZebraPlugin extends CordovaPlugin {
                         @Override
                         public void onError(Exception e) {
                             e.printStackTrace();
-                            callbackContext.error(e);
+                            callbackContext.error(e.getMessage());
                         }
                     });
   }
@@ -30,7 +30,7 @@ public class ZebraPlugin extends CordovaPlugin {
                         @Override
                         public void onError(Exception e) {
                             e.printStackTrace();
-                            callbackContext.error(e);
+                            callbackContext.error(e.getMessage());
                         }
                     });
   }
@@ -40,7 +40,7 @@ public class ZebraPlugin extends CordovaPlugin {
                         @Override
                         public void onError(Exception e) {
                             e.printStackTrace();
-                            callbackContext.error(e);
+                            callbackContext.error(e.getMessage());
                         }
                     });
   }
