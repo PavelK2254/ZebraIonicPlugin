@@ -13,5 +13,21 @@
     <source-file src="src/android/ZebraPlugin.java" target-dir="src/cordova-zebra-plugin/ZebraPlugin"/>
     <source-file src="src/android/MainExecutor.java" target-dir="src/cordova-zebra-plugin/ZebraPlugin"/>
     <source-file src="src/android/TCPConnectionManager.java" target-dir="src/cordova-zebra-plugin/ZebraPlugin"/>
+
+    <resource-file src="src/android/libs/commons-io-2.2.jar" target="../../libs/commons-io-2.2.jar"/>
+    <resource-file src="src/android/libs/commons-lang3-3.4.jar" target="../../libs/commons-lang3-3.4.jar"/>
+    <resource-file src="src/android/libs/commons-net-3.1.jar" target="../../libs/commons-net-3.1.jar"/>
+    <resource-file src="src/android/libs/commons-validator-1.4.0.jar" target="../../libs/commons-validator-1.4.0.jar"/>
+    <resource-file src="src/android/libs/core-1.53.0.0.jar" target="../../libs/core-1.53.0.0.jar"/>
+    <resource-file src="src/android/libs/httpcore-4.3.1.jar" target="../../libs/httpcore-4.3.1.jar"/>
+    <resource-file src="src/android/libs/httpmime-4.3.2.jar" target="../../libs/httpmime-4.3.2.jar"/>
+    <resource-file src="src/android/libs/jackson-annotations-2.2.3.jar" target="../../libs/jackson-annotations-2.2.3.jar"/>
+    <resource-file src="src/android/libs/jackson-core-2.2.3.jar" target="../../libs/jackson-core-2.2.3.jar"/>
+    <resource-file src="src/android/libs/jackson-databind-2.2.3.jar" target="../../libs/jackson-databind-2.2.3.jar"/>
+    <resource-file src="src/android/libs/opencsv-2.2.jar" target="../../libs/opencsv-2.2.jar"/>
+    <resource-file src="src/android/libs/pkix-1.53.0.0.jar" target="../../libs/pkix-1.53.0.0.jar"/>
+    <resource-file src="src/android/libs/prov-1.53.0.0.jar" target="../../libs/prov-1.53.0.0.jar"/>
+    <resource-file src="src/android/libs/snmp6_1z.jar" target="../../libs/snmp6_1z.jar"/>
+    <resource-file src="src/android/libs/ZSDK_ANDROID_API.jar" target="../../libs/ZSDK_ANDROID_API.jar"/>
   </platform>
 </plugin>
