@@ -4,9 +4,9 @@
   <js-module name="ZebraPlugin" src="www/ZebraPlugin.js"><clobbers target="cordova.plugins.ZebraPlugin"/></js-module>
   <platform name="android">
     <config-file parent="/*" target="res/xml/config.xml">
-      <feature name="ZebraPlugin"><param name="android-package" value="cordova-zebra-plugin.ZebraPlugin"/></feature>
-      <feature name="MainExecutor"><param name="android-package" value="cordova-zebra-plugin.MainExecutor"/></feature>
-      <feature name="TCPConnectionManager"><param name="android-package" value="cordova-zebra-plugin.TCPConnectionManager"/></feature>
+      <feature name="ZebraPlugin"><param name="android-package" value="cordova.zebra.plugin.ZebraPlugin"/></feature>
+      <feature name="MainExecutor"><param name="android-package" value="cordova.zebra.plugin.MainExecutor"/></feature>
+      <feature name="TCPConnectionManager"><param name="android-package" value="cordova.zebra.plugin.TCPConnectionManager"/></feature>
     </config-file>
     <framework custom="true" src="src/android/zebra-gradle.gradle" type="gradleReference"/>
     <config-file parent="/*" target="AndroidManifest.xml"></config-file>
