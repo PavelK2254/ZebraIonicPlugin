@@ -20,7 +20,7 @@ public class ZebraPlugin extends CordovaPlugin {
                         @Override
                         public void onError(Exception e) {
                             e.printStackTrace();
-                            callbackContext.error(e.getMessage());
+                            callbackContext.error(e.getLocalizedMessage());
                         }
                     });
   }
@@ -30,7 +30,7 @@ public class ZebraPlugin extends CordovaPlugin {
                         @Override
                         public void onError(Exception e) {
                             e.printStackTrace();
-                            callbackContext.error(e.getMessage());
+                            callbackContext.error(e.getLocalizedMessage());
                         }
                     });
   }
@@ -40,7 +40,7 @@ public class ZebraPlugin extends CordovaPlugin {
                         @Override
                         public void onError(Exception e) {
                             e.printStackTrace();
-                            callbackContext.error(e.getMessage());
+                            callbackContext.error(e.getLocalizedMessage());
                         }
                     });
   }
@@ -51,15 +51,18 @@ public class ZebraPlugin extends CordovaPlugin {
             String message = args.getString(0);
             this.coolMethod(message, callbackContext);
             return true;
-        }else if (action.equals("sendCpclOverTcp")) {
-          String ip = args.getString(0);
-          this.sendZplOverTcp(ip,callbackContext);
         }else if (action.equals("sendZplOverTcp")) {
           String ip = args.getString(0);
+          this.sendZplOverTcp(ip,callbackContext);
+          return true;
+        }else if (action.equals("sendCpclOverTcp")) {
+          String ip = args.getString(0);
           this.sendCpclOverTcp(ip,callbackContext);
+          return true;
         }else if (action.equals("printConfigLabelUsingDnsName")) {
           String dnsName = args.getString(0);
           this.printConfigLabelUsingDnsName(dnsName,callbackContext);
+          return true;
         }
         return false;
     }
