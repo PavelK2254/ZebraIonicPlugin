@@ -35,8 +35,6 @@ class TCPConnectionManager {
         // Instantiate connection for CPCL TCP port at given address
         final   Connection thePrinterConn = new TcpConnection(theIpAddress, TcpConnection.DEFAULT_CPCL_TCP_PORT);
 
-
-        try {
             // Open the connection - physical connection is established here.
             thePrinterConn.open();
 
@@ -48,29 +46,22 @@ class TCPConnectionManager {
 
             // Send the data to printer as a byte array.
             thePrinterConn.write(cpclData.getBytes());
-        } catch (ConnectionException e) {
-            // Handle communications error here.
-            e.printStackTrace();
-        } finally {
+
             // Close the connection to release resources.
             thePrinterConn.close();
-        }
+
     }
 
-     void printConfigLabelUsingDnsName(String dnsName) throws ConnectionException {
+     void printConfigLabelUsingDnsName(String dnsName) throws Exception {
         Connection connection = new TcpConnection(dnsName, 9100);
-        try {
+      
             connection.open();
             ZebraPrinter p = ZebraPrinterFactory.getInstance(connection);
             p.printConfigurationLabel();
-        } catch (ConnectionException e) {
-            e.printStackTrace();
-        } catch (ZebraPrinterLanguageUnknownException e) {
-            e.printStackTrace();
-        } finally {
+
             // Close the connection to release resources.
             connection.close();
-        }
+
 
     }
 
