@@ -9,46 +9,50 @@ import org.json.JSONObject;
 
 public class MainExecutor extends TCPConnectionManager{
 
-  public interface errorReporter{
+  public interface StatusReporter{
         void onError(Exception e);
+        void onSuccess();
     }
 
 
-    public void sendZplOverTcp(final String theIpAddress, final errorReporter onError){
+    public void sendZplOverTcp(final String theIpAddress, final StatusReporter onStatusUpdate){
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
                     MainExecutor.this.sendZplOverTcp(theIpAddress);
+                    onStatusUpdate.onSuccess();
                 } catch (Exception e) {
-                    onError.onError(e);
+                    onStatusUpdate.onError(e);
                 }
             }
         });
         t.start();
     }
 
-    public void sendCpclOverTcp(final String theIpAddress, final errorReporter OnError){
+    public void sendCpclOverTcp(final String theIpAddress, final StatusReporter onStatusUpdate){
         new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
                     MainExecutor.this.sendCpclOverTcp(theIpAddress);
+                    onStatusUpdate.onSuccess();
                 } catch (Exception e) {
-                    OnError.onError(e);
+                    onStatusUpdate.onError(e);
                 }
             }
         }).start();
     }
 
-    public void printConfigLabelUsingDnsName(final String dnsName,final errorReporter OnError){
+    public void printConfigLabelUsingDnsName(final String dnsName,final StatusReporter onStatusUpdate){
         new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
                     MainExecutor.this.printConfigLabelUsingDnsName(dnsName);
+                    onStatusUpdate.onSuccess();
                 } catch (Exception e) {
-                    OnError.onError(e);
+                    onStatusUpdate.onError(e);
                 }
             }
         }).start();

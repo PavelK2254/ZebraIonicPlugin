@@ -16,31 +16,46 @@ public class ZebraPlugin extends CordovaPlugin {
   MainExecutor mMainExecutor = new MainExecutor();
 
   public void sendZplOverTcp(final String theIpAddress,CallbackContext callbackContext){
-    mMainExecutor.sendZplOverTcp(theIpAddress,new MainExecutor.errorReporter() {
+    mMainExecutor.sendZplOverTcp(theIpAddress,new MainExecutor.StatusReporter() {
                         @Override
                         public void onError(Exception e) {
                             e.printStackTrace();
                             callbackContext.error(e.getLocalizedMessage());
+                        }
+
+                        @Override
+                        public void onSuccess(){
+                          callbackContext.success("Connection Success");
                         }
                     });
   }
 
   public void sendCpclOverTcp(final String theIpAddress,CallbackContext callbackContext){
-    mMainExecutor.sendCpclOverTcp(theIpAddress,new MainExecutor.errorReporter() {
+    mMainExecutor.sendCpclOverTcp(theIpAddress,new MainExecutor.StatusReporter() {
                         @Override
                         public void onError(Exception e) {
                             e.printStackTrace();
                             callbackContext.error(e.getLocalizedMessage());
                         }
+
+                        @Override
+                        public void onSuccess(){
+                          callbackContext.success("Connection Success");
+                        }
                     });
   }
 
   public void printConfigLabelUsingDnsName(final String dnsName,CallbackContext callbackContext){
-      mMainExecutor.printConfigLabelUsingDnsName(dnsName,new MainExecutor.errorReporter() {
+      mMainExecutor.printConfigLabelUsingDnsName(dnsName,new MainExecutor.StatusReporter() {
                         @Override
                         public void onError(Exception e) {
                             e.printStackTrace();
                             callbackContext.error(e.getLocalizedMessage());
+                        }
+
+                        @Override
+                        public void onSuccess(){
+                          callbackContext.success("Connection Success");
                         }
                     });
   }
