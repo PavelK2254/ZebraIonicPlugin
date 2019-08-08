@@ -11,17 +11,17 @@ public class MainExecutor extends TCPConnectionManager{
 
   public interface StatusReporter{
         void onError(Exception e);
-        void onSuccess();
+        void onSuccess(String message);
     }
 
 
-    public void sendZplOverTcp(final String theIpAddress, final StatusReporter onStatusUpdate){
+    public void sendZplOverTcp(final String theIpAddress,final String contentText ,final StatusReporter onStatusUpdate){
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    MainExecutor.this.sendZplOverTcp(theIpAddress);
-                    onStatusUpdate.onSuccess();
+                    MainExecutor.this.sendZplOverTcp(theIpAddress,contentText);
+                    onStatusUpdate.onSuccess("Successfully sent " + contentText);
                 } catch (Exception e) {
                     onStatusUpdate.onError(e);
                 }
@@ -30,13 +30,13 @@ public class MainExecutor extends TCPConnectionManager{
         t.start();
     }
 
-    public void sendCpclOverTcp(final String theIpAddress, final StatusReporter onStatusUpdate){
+    public void sendCpclOverTcp(final String theIpAddress, final String contentText,final StatusReporter onStatusUpdate){
         new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    MainExecutor.this.sendCpclOverTcp(theIpAddress);
-                    onStatusUpdate.onSuccess();
+                    MainExecutor.this.sendCpclOverTcp(theIpAddress,contentText);
+                    onStatusUpdate.onSuccess("Successfully sent " + contentText);
                 } catch (Exception e) {
                     onStatusUpdate.onError(e);
                 }
@@ -50,7 +50,7 @@ public class MainExecutor extends TCPConnectionManager{
             public void run() {
                 try {
                     MainExecutor.this.printConfigLabelUsingDnsName(dnsName);
-                    onStatusUpdate.onSuccess();
+                    onStatusUpdate.onSuccess("Successfully sent Config Label");
                 } catch (Exception e) {
                     onStatusUpdate.onError(e);
                 }

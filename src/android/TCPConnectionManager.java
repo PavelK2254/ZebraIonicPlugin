@@ -9,7 +9,9 @@ import com.zebra.sdk.printer.ZebraPrinterLanguageUnknownException;
 
 class TCPConnectionManager {
 
-     void sendZplOverTcp(String theIpAddress) throws ConnectionException {
+      String TAG = "ZebraPrinter: ";
+
+     void sendZplOverTcp(String theIpAddress,String contentText) throws ConnectionException {
         // Instantiate connection for ZPL TCP port at given address
         Connection thePrinterConn = new TcpConnection(theIpAddress, TcpConnection.DEFAULT_ZPL_TCP_PORT);
 
@@ -18,7 +20,9 @@ class TCPConnectionManager {
             thePrinterConn.open();
 
             // This example prints "This is a ZPL test." near the top of the label.
-            String zplData = "^XA^FO20,20^A0N,25,25^FDThis is a ZPL test.^FS^XZ";
+            //String zplData = "^XA^FO20,20^A0N,25,25^FDThis is a ZPL test.^FS^XZ";
+            System.out.println(TAG+"Printing " + contentText);
+            String zplData = contentText;
 
             // Send the data to printer as a byte array.
             thePrinterConn.write(zplData.getBytes());
@@ -31,7 +35,7 @@ class TCPConnectionManager {
        // }
     }
 
-     void sendCpclOverTcp(String theIpAddress) throws ConnectionException {
+     void sendCpclOverTcp(String theIpAddress,String contentText) throws ConnectionException {
         // Instantiate connection for CPCL TCP port at given address
         final   Connection thePrinterConn = new TcpConnection(theIpAddress, TcpConnection.DEFAULT_CPCL_TCP_PORT);
 
@@ -39,10 +43,12 @@ class TCPConnectionManager {
             thePrinterConn.open();
 
             // This example prints "This is a CPCL test." near the top of the label.
-            String cpclData = "! 0 200 200 210 1\r\n"
+          /*  String cpclData = "! 0 200 200 210 1\r\n"
                     + "TEXT 4 0 30 40 This is a CPCL test.\r\n"
                     + "FORM\r\n"
-                    + "PRINT\r\n";
+                    + "PRINT\r\n";*/
+                    System.out.println(TAG+"Printing " + contentText);
+                    String cpclData = contentText;
 
             // Send the data to printer as a byte array.
             thePrinterConn.write(cpclData.getBytes());
@@ -54,11 +60,11 @@ class TCPConnectionManager {
 
      void printConfigLabelUsingDnsName(String dnsName) throws Exception {
         Connection connection = new TcpConnection(dnsName, 9100);
-      
+
             connection.open();
             ZebraPrinter p = ZebraPrinterFactory.getInstance(connection);
             p.printConfigurationLabel();
-
+            System.out.println("Printing Config Label");
             // Close the connection to release resources.
             connection.close();
 

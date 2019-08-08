@@ -15,8 +15,8 @@ public class ZebraPlugin extends CordovaPlugin {
 
   MainExecutor mMainExecutor = new MainExecutor();
 
-  public void sendZplOverTcp(final String theIpAddress,CallbackContext callbackContext){
-    mMainExecutor.sendZplOverTcp(theIpAddress,new MainExecutor.StatusReporter() {
+  public void sendZplOverTcp(final String theIpAddress,final String contentText,CallbackContext callbackContext){
+    mMainExecutor.sendZplOverTcp(theIpAddress,contentText,new MainExecutor.StatusReporter() {
                         @Override
                         public void onError(Exception e) {
                             e.printStackTrace();
@@ -24,14 +24,14 @@ public class ZebraPlugin extends CordovaPlugin {
                         }
 
                         @Override
-                        public void onSuccess(){
-                          callbackContext.success("Connection Success");
+                        public void onSuccess(String message){
+                          callbackContext.success(message);
                         }
                     });
   }
 
-  public void sendCpclOverTcp(final String theIpAddress,CallbackContext callbackContext){
-    mMainExecutor.sendCpclOverTcp(theIpAddress,new MainExecutor.StatusReporter() {
+  public void sendCpclOverTcp(final String theIpAddress,final String contentText,CallbackContext callbackContext){
+    mMainExecutor.sendCpclOverTcp(theIpAddress,contentText,new MainExecutor.StatusReporter() {
                         @Override
                         public void onError(Exception e) {
                             e.printStackTrace();
@@ -39,8 +39,8 @@ public class ZebraPlugin extends CordovaPlugin {
                         }
 
                         @Override
-                        public void onSuccess(){
-                          callbackContext.success("Connection Success");
+                        public void onSuccess(String message){
+                          callbackContext.success(message);
                         }
                     });
   }
@@ -54,8 +54,8 @@ public class ZebraPlugin extends CordovaPlugin {
                         }
 
                         @Override
-                        public void onSuccess(){
-                          callbackContext.success("Connection Success");
+                        public void onSuccess(String message){
+                          callbackContext.success(message);
                         }
                     });
   }
@@ -68,11 +68,13 @@ public class ZebraPlugin extends CordovaPlugin {
             return true;
         }else if (action.equals("sendZplOverTcp")) {
           String ip = args.getString(0);
-          this.sendZplOverTcp(ip,callbackContext);
+          String message = args.getString(1);
+          this.sendZplOverTcp(ip,message,callbackContext);
           return true;
         }else if (action.equals("sendCpclOverTcp")) {
           String ip = args.getString(0);
-          this.sendCpclOverTcp(ip,callbackContext);
+          String message = args.getString(1);
+          this.sendCpclOverTcp(ip,message,callbackContext);
           return true;
         }else if (action.equals("printConfigLabelUsingDnsName")) {
           String dnsName = args.getString(0);
