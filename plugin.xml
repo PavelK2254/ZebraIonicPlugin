@@ -7,12 +7,14 @@
       <feature name="ZebraPlugin"><param name="android-package" value="cordova.zebra.plugin.ZebraPlugin"/></feature>
       <feature name="MainExecutor"><param name="android-package" value="cordova.zebra.plugin.MainExecutor"/></feature>
       <feature name="TCPConnectionManager"><param name="android-package" value="cordova.zebra.plugin.TCPConnectionManager"/></feature>
+      <feature name="ZplImagePrinter"><param name="android-package" value="cordova.zebra.plugin.ZplImagePrinter"/></feature>
     </config-file>
     <framework custom="true" src="src/android/zebra-gradle.gradle" type="gradleReference"/>
     <config-file parent="/*" target="AndroidManifest.xml"></config-file>
     <source-file src="src/android/ZebraPlugin.java" target-dir="src/cordova-zebra-plugin/ZebraPlugin"/>
     <source-file src="src/android/MainExecutor.java" target-dir="src/cordova-zebra-plugin/ZebraPlugin"/>
     <source-file src="src/android/TCPConnectionManager.java" target-dir="src/cordova-zebra-plugin/ZebraPlugin"/>
+    <source-file src="src/android/ZplImagePrinter.java" target-dir="src/cordova-zebra-plugin/ZebraPlugin"/>
 
     <resource-file src="src/android/libs/commons-io-2.2.jar" target="../../libs/commons-io-2.2.jar"/>
     <resource-file src="src/android/libs/commons-lang3-3.4.jar" target="../../libs/commons-lang3-3.4.jar"/>
