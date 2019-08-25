@@ -13,7 +13,7 @@ import com.zebra.sdk.printer.ZebraPrinterLanguageUnknownException;
 
 import java.io.IOException;
 
-public class ZplImagePrinter {
+public class ZplImagePrinter extends TCPConnectionManager{
 
   private ZebraImageI getZebraImageFromBitmap(byte[] bitmapByteArray) throws IOException {
       Bitmap bitmap = BitmapFactory.decodeByteArray(bitmapByteArray,0,bitmapByteArray.length);

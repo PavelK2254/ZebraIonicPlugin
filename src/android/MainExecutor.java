@@ -2,14 +2,13 @@ package cordova.zebra.plugin;
 
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.CallbackContext;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import com.zebra.sdk.printer.ZebraPrinter;
 import com.zebra.sdk.printer.ZebraPrinterFactory;
 
-public class MainExecutor extends TCPConnectionManager{
+public class MainExecutor extends ZplImagePrinter{
 
   public interface StatusReporter{
         void onError(Exception e);
@@ -21,8 +20,8 @@ public class MainExecutor extends TCPConnectionManager{
           @Override
           public void run() {
             try{
-              ZplImagePrinter ZplImagePrinter = new ZplImagePrinter();
-              ZplImagePrinter.printImage(ipAddress, bitmapByteArray);
+              ZplImagePrinter mZplImagePrinter = new ZplImagePrinter();
+              mZplImagePrinter.printImage(ipAddress, bitmapByteArray);
               onStatusUpdate.onSuccess("Image Printed Successfully");
             }catch (Exception e) {
               onStatusUpdate.onError(e);
