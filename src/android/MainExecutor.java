@@ -16,12 +16,11 @@ public class MainExecutor extends TCPConnectionManager{
     }
 
     public void printImageOverTcp(final String theIpAddress, final byte[] bitmapByteArray, final StatusReporter onStatusUpdate){
-        Thread t = new Thread(new Runnable(){
+      Thread t = new Thread(new Runnable(){
             @Override
             public void run() {
                 try{
-                    ZplImagePrinter mZplImagePrinter = new ZplImagePrinter();
-                    mZplImagePrinter.printImage(theIpAddress, bitmapByteArray);
+                    MainExecutor.this.printImage(theIpAddress,bitmapByteArray);
                     onStatusUpdate.onSuccess("Image Printed Successfully");
                 }catch (Exception e) {
                     onStatusUpdate.onError(e);

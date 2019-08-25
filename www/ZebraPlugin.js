@@ -21,5 +21,5 @@ exports.printConfigLabelUsingDnsName = function (arg0, success, error) {
 };
 
 exports.printImageOverTcp = function(arg0,arg1,success,error){
-  exec(success, error, 'ZebraPlugin', 'printImageOverTcp', [arg0]);
+  exec(success, error, 'ZebraPlugin', 'printImageOverTcp', [arg0,arg1]);
 }

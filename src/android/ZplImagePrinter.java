@@ -1,19 +1,20 @@
 package com.pk.testapp;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+
 import com.zebra.sdk.comm.Connection;
 import com.zebra.sdk.comm.ConnectionException;
 import com.zebra.sdk.comm.TcpConnection;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import com.zebra.sdk.graphics.ZebraImageI;
 import com.zebra.sdk.graphics.ZebraImageFactory;
+import com.zebra.sdk.graphics.ZebraImageI;
 import com.zebra.sdk.printer.ZebraPrinter;
 import com.zebra.sdk.printer.ZebraPrinterFactory;
 import com.zebra.sdk.printer.ZebraPrinterLanguageUnknownException;
 
 import java.io.IOException;
 
-public class ZplImagePrinter extends TCPConnectionManager{
+public class ZplImagePrinter{
 
   private ZebraImageI getZebraImageFromBitmap(byte[] bitmapByteArray) throws IOException {
       Bitmap bitmap = BitmapFactory.decodeByteArray(bitmapByteArray,0,bitmapByteArray.length);
