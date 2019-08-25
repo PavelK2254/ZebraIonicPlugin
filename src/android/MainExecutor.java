@@ -14,6 +14,22 @@ public class MainExecutor extends TCPConnectionManager{
         void onSuccess(String message);
     }
 
+    public void printImageOverTcp(final String theIpAddress,byte[] bitmapByteArray,final StatusReporter onStatusUpdate){
+        Thread t = new Thread(new Runnable(){
+          @Override
+          public void run() {
+            try{
+              ZplImagePrinter ZplImagePrinter = new ZplImagePrinter();
+              ZplImagePrinter.printImage(ipAddress, bitmapByteArray);
+              onStatusUpdate.onSuccess("Image Printed Successfully");
+            }catch (Exception e) {
+              onStatusUpdate.onError(e);
+            }
+          }
+        });
+        t.start();
+    }
+
 
     public void sendZplOverTcp(final String theIpAddress,final String contentText ,final StatusReporter onStatusUpdate){
         Thread t = new Thread(new Runnable() {
