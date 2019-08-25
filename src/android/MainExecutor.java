@@ -8,25 +8,25 @@ import org.json.JSONObject;
 import com.zebra.sdk.printer.ZebraPrinter;
 import com.zebra.sdk.printer.ZebraPrinterFactory;
 
-public class MainExecutor extends ZplImagePrinter{
+public class MainExecutor extends TCPConnectionManager{
 
   public interface StatusReporter{
         void onError(Exception e);
         void onSuccess(String message);
     }
 
-    public void printImageOverTcp(final String theIpAddress,byte[] bitmapByteArray,final StatusReporter onStatusUpdate){
+    public void printImageOverTcp(final String theIpAddress, final byte[] bitmapByteArray, final StatusReporter onStatusUpdate){
         Thread t = new Thread(new Runnable(){
-          @Override
-          public void run() {
-            try{
-              ZplImagePrinter mZplImagePrinter = new ZplImagePrinter();
-              mZplImagePrinter.printImage(ipAddress, bitmapByteArray);
-              onStatusUpdate.onSuccess("Image Printed Successfully");
-            }catch (Exception e) {
-              onStatusUpdate.onError(e);
+            @Override
+            public void run() {
+                try{
+                    ZplImagePrinter mZplImagePrinter = new ZplImagePrinter();
+                    mZplImagePrinter.printImage(theIpAddress, bitmapByteArray);
+                    onStatusUpdate.onSuccess("Image Printed Successfully");
+                }catch (Exception e) {
+                    onStatusUpdate.onError(e);
+                }
             }
-          }
         });
         t.start();
     }
