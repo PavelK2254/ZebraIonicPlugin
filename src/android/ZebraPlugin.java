@@ -7,6 +7,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import cordova.zebra.plugin.MainExecutor;
+import android.util.Base64;
 
 /**
  * This class echoes a string called from JavaScript.
@@ -14,6 +15,22 @@ import cordova.zebra.plugin.MainExecutor;
 public class ZebraPlugin extends CordovaPlugin {
 
   MainExecutor mMainExecutor = new MainExecutor();
+
+  public void printImageOverTcp(final String theIpAddress,final String encodedImage,CallbackContext callbackContext){
+    byte[] decodedString = Base64.decode(encodedImage, Base64.DEFAULT);
+    mMainExecutor.printImageOverTcp(theIpAddress,decodedString,new MainExecutor.StatusReporter(){
+      @Override
+      public void onError(Exception e) {
+          e.printStackTrace();
+          callbackContext.error(e.getLocalizedMessage());
+      }
+
+      @Override
+      public void onSuccess(String message){
+        callbackContext.success(message);
+      }
+    });
+  }
 
   public void sendZplOverTcp(final String theIpAddress,final String contentText,CallbackContext callbackContext){
     mMainExecutor.sendZplOverTcp(theIpAddress,contentText,new MainExecutor.StatusReporter() {
@@ -79,6 +96,11 @@ public class ZebraPlugin extends CordovaPlugin {
         }else if (action.equals("printConfigLabelUsingDnsName")) {
           String dnsName = args.getString(0);
           this.printConfigLabelUsingDnsName(dnsName,callbackContext);
+          return true;
+        }else if (action.equals("printImageOverTcp")) {
+          String ip = args.getString(0);
+          String encodedImage = args.getString(1);
+          this.printImageOverTcp(ip,encodedImage,callbackContext);
           return true;
         }
         return false;
