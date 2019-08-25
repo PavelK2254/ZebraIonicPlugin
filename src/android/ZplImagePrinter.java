@@ -3,6 +3,8 @@ package com.pk.testapp;
 import com.zebra.sdk.comm.Connection;
 import com.zebra.sdk.comm.ConnectionException;
 import com.zebra.sdk.comm.TcpConnection;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import com.zebra.sdk.graphics.ZebraImageI;
 import com.zebra.sdk.graphics.ZebraImageFactory;
 import com.zebra.sdk.printer.ZebraPrinter;
