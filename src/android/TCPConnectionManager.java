@@ -85,9 +85,11 @@ class TCPConnectionManager {
         connection.open();
         ZebraPrinter printer = ZebraPrinterFactory.getInstance(connection);
         if(connection.isConnected()){
-            int x = 0;
-            int y = 0;
-            printer.printImage(getZebraImageFromBitmap(bitmapByteArray),x,y,0,0,false);
+            int x = 10;
+            int y = 10;
+            int width = 0;
+            int heigth = 0;
+            printer.printImage(getZebraImageFromBitmap(bitmapByteArray),x,y,width,heigth,false);
             connection.close();
         }
     }
