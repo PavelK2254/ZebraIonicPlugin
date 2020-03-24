@@ -7,6 +7,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import com.zebra.sdk.printer.ZebraPrinter;
 import com.zebra.sdk.printer.ZebraPrinterFactory;
+import cordova.zebra.plugin.USBPrinter;
 
 public class MainExecutor extends TCPConnectionManager{
 
@@ -72,6 +73,21 @@ public class MainExecutor extends TCPConnectionManager{
                 }
             }
         }).start();
+    }
+
+    public void printOverUSB(final Context context,final String message,final StatusReporter onStatusUpdate){
+      final USBPrinter mUSBprinter = new USBPrinter();
+      new Thread(new Runnable() {
+          @Override
+          public void run() {
+              try {
+                  mUSBprinter.findPrinters(context,message);
+                  onStatusUpdate.onSuccess("Successfully printed over USB");
+              } catch (Exception e) {
+                  onStatusUpdate.onError(e);
+              }
+          }
+      }).start();
     }
 
 }
