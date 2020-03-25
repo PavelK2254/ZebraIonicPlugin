@@ -1,4 +1,4 @@
-
+package cordova.zebra.plugin;
 
 import android.content.Context;
 import com.zebra.sdk.comm.Connection;
@@ -14,6 +14,7 @@ import com.zebra.sdk.graphics.ZebraImageI;
 import com.zebra.sdk.printer.ZebraPrinter;
 import com.zebra.sdk.printer.ZebraPrinterFactory;
 import com.zebra.sdk.printer.ZebraPrinterLanguageUnknownException;
+import java.io.IOException;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -22,7 +23,7 @@ import java.util.List;
 
    private DiscoveredPrinterUsb discoveredPrinterUsb;
 
-       public void findPrinters(Context context,String message) throws RuntimeException{
+       public void findPrinters(Context context,final byte[] message) throws RuntimeException{
                    // Find connected printers
                    UsbDiscoveryHandler handler = new UsbDiscoveryHandler();
                    UsbDiscoverer.findPrinters(context.getApplicationContext(), handler);
@@ -44,7 +45,12 @@ import java.util.List;
                    }
        }
 
-       private void printOverUSB(String message) throws ConnectionException {
+       private ZebraImageI getZebraImageFromBitmap(byte[] bitmapByteArray) throws IOException {
+           Bitmap bitmap = BitmapFactory.decodeByteArray(bitmapByteArray,0,bitmapByteArray.length);
+           return ZebraImageFactory.getImage(bitmap);
+       }
+
+       private void printOverUSB(byte[] bitmapByteArray) throws ConnectionException, ZebraPrinterLanguageUnknownException, IOException {
                Connection connection = null;
                    connection = discoveredPrinterUsb.getConnection();
                    connection.open();

@@ -1,5 +1,6 @@
 package cordova.zebra.plugin;
 
+import android.content.Context;
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.CallbackContext;
 import org.json.JSONArray;
@@ -75,7 +76,7 @@ public class MainExecutor extends TCPConnectionManager{
         }).start();
     }
 
-    public void printOverUSB(final Context context,final String message,final StatusReporter onStatusUpdate){
+    public void printOverUSB(final Context context,final byte[] message,final StatusReporter onStatusUpdate){
       final USBPrinter mUSBprinter = new USBPrinter();
       new Thread(new Runnable() {
           @Override

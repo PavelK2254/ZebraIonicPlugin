@@ -22,7 +22,8 @@ public class ZebraPlugin extends CordovaPlugin {
 
   public void printOverUSB(final String message,CallbackContext callbackContext){
     Context appContext = this.cordova.getActivity().getApplicationContext();
-    mMainExecutor.printOverUSB(appContext,message,new MainExecutor.StatusReporter(){
+    byte[] decodedString = Base64.decode(message, Base64.DEFAULT);
+    mMainExecutor.printOverUSB(appContext,decodedString,new MainExecutor.StatusReporter(){
       @Override
       public void onError(Exception e) {
           e.printStackTrace();
@@ -123,8 +124,8 @@ public class ZebraPlugin extends CordovaPlugin {
           this.printImageOverTcp(ip,encodedImage,callbackContext);
           return true;
         }else if (action.equals("printOverUSB")) {
-          String message = args.getString(0);
-          this.printOverUSB(message,callbackContext);
+          String encodedImage = args.getString(0);
+          this.printOverUSB(encodedImage,callbackContext);
           return true;
         }
         return false;
