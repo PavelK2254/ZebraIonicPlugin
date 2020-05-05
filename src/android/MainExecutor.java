@@ -1,5 +1,6 @@
 package cordova.zebra.plugin;
 
+import android.content.Context;
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.CallbackContext;
 import org.json.JSONArray;
@@ -7,6 +8,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import com.zebra.sdk.printer.ZebraPrinter;
 import com.zebra.sdk.printer.ZebraPrinterFactory;
+import cordova.zebra.plugin.USBPrinter;
 
 public class MainExecutor extends TCPConnectionManager{
 
@@ -72,6 +74,21 @@ public class MainExecutor extends TCPConnectionManager{
                 }
             }
         }).start();
+    }
+
+    public void printOverUSB(final Context context,final byte[] message,final StatusReporter onStatusUpdate){
+      final USBPrinter mUSBprinter = new USBPrinter();
+      new Thread(new Runnable() {
+          @Override
+          public void run() {
+              try {
+                  mUSBprinter.findPrinters(context,message);
+                  onStatusUpdate.onSuccess("Successfully printed over USB");
+              } catch (Exception e) {
+                  onStatusUpdate.onError(e);
+              }
+          }
+      }).start();
     }
 
 }
