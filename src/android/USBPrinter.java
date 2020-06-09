@@ -1,6 +1,6 @@
 package cordova.zebra.plugin;
 
-import android.content.Context;
+
 import com.zebra.sdk.comm.Connection;
 import com.zebra.sdk.comm.ConnectionException;
 import com.zebra.sdk.printer.discovery.DiscoveredPrinter;
@@ -15,17 +15,22 @@ import com.zebra.sdk.printer.ZebraPrinter;
 import com.zebra.sdk.printer.ZebraPrinterFactory;
 import com.zebra.sdk.printer.ZebraPrinterLanguageUnknownException;
 import java.io.IOException;
+import android.content.Context;
+import android.hardware.usb.*;
+
 
 import java.util.LinkedList;
 import java.util.List;
 
- class USBPrinter {
+ public class USBPrinter extends ZebraPlugin{
 
    private DiscoveredPrinterUsb discoveredPrinterUsb;
+   private UsbManager mUsbManager;
 
        public void findPrinters(Context context,final byte[] message) throws RuntimeException{
                    // Find connected printers
                    UsbDiscoveryHandler handler = new UsbDiscoveryHandler();
+                   mUsbManager = (UsbManager) context.getSystemService(Context.USB_SERVICE);
                    UsbDiscoverer.findPrinters(context.getApplicationContext(), handler);
 
                    try {
@@ -34,6 +39,9 @@ import java.util.List;
                        }
 
                        if (handler.printers != null && handler.printers.size() > 0) {
+                          if(!mUsbManager.hasPermission(discoveredPrinterUsb.device)){
+                            throw new RuntimeException("No permission for USB");
+                          }
                            discoveredPrinterUsb = handler.printers.get(0);
                            printOverUSB(message);
 

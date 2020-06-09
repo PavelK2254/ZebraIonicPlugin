@@ -9,6 +9,7 @@ import org.json.JSONObject;
 
 import android.content.Context;
 
+
 import cordova.zebra.plugin.MainExecutor;
 import android.util.Base64;
 
@@ -17,24 +18,26 @@ import android.util.Base64;
  */
 public class ZebraPlugin extends CordovaPlugin {
 
+public static final int USB_REQ_CODE = 0;
 
   MainExecutor mMainExecutor = new MainExecutor();
 
   public void printOverUSB(final String message,CallbackContext callbackContext){
-    Context appContext = this.cordova.getActivity().getApplicationContext();
-    byte[] decodedString = Base64.decode(message, Base64.DEFAULT);
-    mMainExecutor.printOverUSB(appContext,decodedString,new MainExecutor.StatusReporter(){
-      @Override
-      public void onError(Exception e) {
-          e.printStackTrace();
-          callbackContext.error(e.getLocalizedMessage());
-      }
 
-      @Override
-      public void onSuccess(String message){
-        callbackContext.success(message);
-      }
-    });
+      Context appContext = this.cordova.getActivity().getApplicationContext();
+      byte[] decodedString = Base64.decode(message, Base64.DEFAULT);
+      mMainExecutor.printOverUSB(appContext,decodedString,new MainExecutor.StatusReporter(){
+        @Override
+        public void onError(Exception e) {
+            e.printStackTrace();
+            callbackContext.error(e.getLocalizedMessage());
+        }
+
+        @Override
+        public void onSuccess(String message){
+          callbackContext.success(message);
+        }
+      });
   }
 
   public void printImageOverTcp(final String theIpAddress,final String encodedImage,CallbackContext callbackContext){

@@ -21,6 +21,7 @@ exports.printConfigLabelUsingDnsName = function (arg0, success, error) {
 };
 
 exports.printImageOverTcp = function(arg0,arg1,success,error){
+  console.log("Running: printImageOverTcp");
   exec(success, error, 'ZebraPlugin', 'printImageOverTcp', [arg0,arg1]);
 }
 
@@ -29,5 +30,6 @@ exports.printImageOverTcp = function(arg0,arg1,success,error){
 arg0 - message
 */
 exports.printOverUSB = function(arg0,success,error){
+  console.log("Running: printOverUSB");
   exec(success,error,'ZebraPlugin','printOverUSB',[arg0]);
 }
