@@ -42,7 +42,9 @@ import java.util.List;
                           if(!mUsbManager.hasPermission(discoveredPrinterUsb.device)){
                             throw new RuntimeException("No permission for USB");
                           }
-                           discoveredPrinterUsb = handler.printers.get(0);
+                          handler.printers.forEach(printer -> {
+                           if(printer != null) discoveredPrinterUsb = printer;
+                         });
                            printOverUSB(message);
 
                        }else{
