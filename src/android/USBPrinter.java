@@ -15,7 +15,11 @@ import com.zebra.sdk.printer.ZebraPrinter;
 import com.zebra.sdk.printer.ZebraPrinterFactory;
 import com.zebra.sdk.printer.ZebraPrinterLanguageUnknownException;
 import java.io.IOException;
+import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.hardware.usb.*;
 
 
@@ -26,13 +30,16 @@ import java.util.List;
 
    private DiscoveredPrinterUsb discoveredPrinterUsb;
    private UsbManager mUsbManager;
+   private PendingIntent mPermissionIntent;
 
        public void findPrinters(Context context,final byte[] message) throws RuntimeException{
                    // Find connected printers
                    UsbDiscoveryHandler handler = new UsbDiscoveryHandler();
+                   String ACTION_USB_PERMISSION = "com.pk.zebraprintusb.USB_PERMISSION";
+                   IntentFilter filter = new IntentFilter(ACTION_USB_PERMISSION);
                    mUsbManager = (UsbManager) context.getSystemService(Context.USB_SERVICE);
                    UsbDiscoverer.findPrinters(context.getApplicationContext(), handler);
-
+                   mPermissionIntent = PendingIntent.getBroadcast(context, 0, new Intent(ACTION_USB_PERMISSION), 0);
                    try {
                        while (!handler.discoveryComplete) {
                            Thread.sleep(100);
@@ -42,9 +49,10 @@ import java.util.List;
                          handler.printers.forEach(printer -> {
                           if(printer != null) discoveredPrinterUsb = printer;
                         });
-                      /*    if(!mUsbManager.hasPermission(discoveredPrinterUsb.device)){
-                            throw new RuntimeException("No permission for USB");
-                          }*/
+                          if(!mUsbManager.hasPermission(discoveredPrinterUsb.device)){
+                           // throw new RuntimeException("No permission for USB");
+                            mUsbManager.requestPermission(discoveredPrinterUsb.device, mPermissionIntent);
+                          }
                            printOverUSB(message);
 
                        }else{
