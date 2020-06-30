@@ -15,6 +15,8 @@ import com.zebra.sdk.printer.ZebraPrinter;
 import com.zebra.sdk.printer.ZebraPrinterFactory;
 import com.zebra.sdk.printer.ZebraPrinterLanguageUnknownException;
 import java.io.IOException;
+import java.rmi.ConnectException;
+
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -59,14 +61,17 @@ import java.util.List;
                         throw new RuntimeException("Could not find printers");
                        }
                    } catch (Exception e) {
-                       throw new RuntimeException("Error discovering printers: " + e.getLocalizedMessage());
+                       throw new RuntimeException("Zebra plugin exception: " + e.getLocalizedMessage());
                    }
        }
 
        private ZebraImageI getZebraImageFromBitmap(byte[] bitmapByteArray) throws IOException {
+           if(bitmapByteArray == null){
+               throw new RuntimeException("bitmapByteArray is null");
+           }
            Bitmap mBitmap = BitmapFactory.decodeByteArray(bitmapByteArray,0,bitmapByteArray.length);
            if(mBitmap == null){
-               throw new IllegalArgumentException("Bitmap is null, bitmapByteArray length: "+ bitmapByteArray.length+ "bitmap array text: " + Arrays.toString(bitmapByteArray));
+               throw new IllegalArgumentException("Bitmap is null, bitmapByteArray length: "+ bitmapByteArray.length+ " Bitmap array text: " + Arrays.toString(bitmapByteArray));
            }
            return ZebraImageFactory.getImage(mBitmap);
        }
@@ -83,6 +88,8 @@ import java.util.List;
                        int heigth = 0;
                        printer.printImage(getZebraImageFromBitmap(bitmapByteArray),x,y,width,heigth,false);
                        connection.close();
+                   }else{
+                       throw new ConnectException("Could not open connection to a printer");
                    }
        }
 
