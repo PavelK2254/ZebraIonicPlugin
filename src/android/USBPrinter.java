@@ -15,7 +15,6 @@ import com.zebra.sdk.printer.ZebraPrinter;
 import com.zebra.sdk.printer.ZebraPrinterFactory;
 import com.zebra.sdk.printer.ZebraPrinterLanguageUnknownException;
 import java.io.IOException;
-import java.rmi.ConnectException;
 
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
@@ -89,7 +88,7 @@ import java.util.List;
                        printer.printImage(getZebraImageFromBitmap(bitmapByteArray),x,y,width,heigth,false);
                        connection.close();
                    }else{
-                       throw new ConnectException("Could not open connection to a printer");
+                       throw new ConnectionException("Could not open connection to a printer");
                    }
        }
 
