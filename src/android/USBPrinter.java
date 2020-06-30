@@ -22,7 +22,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.hardware.usb.*;
 
-
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
