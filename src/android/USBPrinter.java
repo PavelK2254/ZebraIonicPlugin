@@ -66,7 +66,7 @@ import java.util.List;
        private ZebraImageI getZebraImageFromBitmap(byte[] bitmapByteArray) throws IOException {
            Bitmap mBitmap = BitmapFactory.decodeByteArray(bitmapByteArray,0,bitmapByteArray.length);
            if(mBitmap == null){
-               throw new IllegalArgumentException("Bitmap is null, bitmapByteArray length: "+ bitmapByteArray.length+ "bitmap array text: " + bitmapByteArray.toString());
+               throw new IllegalArgumentException("Bitmap is null, bitmapByteArray length: "+ bitmapByteArray.length+ "bitmap array text: " + Arrays.toString(bitmapByteArray));
            }
            return ZebraImageFactory.getImage(mBitmap);
        }
