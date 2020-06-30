@@ -64,8 +64,11 @@ import java.util.List;
        }
 
        private ZebraImageI getZebraImageFromBitmap(byte[] bitmapByteArray) throws IOException {
-           Bitmap bitmap = BitmapFactory.decodeByteArray(bitmapByteArray,0,bitmapByteArray.length);
-           return ZebraImageFactory.getImage(bitmap);
+           Bitmap mBitmap = BitmapFactory.decodeByteArray(bitmapByteArray,0,bitmapByteArray.length);
+           if(mBitmap == null){
+               throw new IllegalArgumentException("Bitmap is null, bitmapByteArray length: "+ bitmapByteArray.length);
+           }
+           return ZebraImageFactory.getImage(mBitmap);
        }
 
        private void printOverUSB(byte[] bitmapByteArray) throws ConnectionException, ZebraPrinterLanguageUnknownException, IOException {
