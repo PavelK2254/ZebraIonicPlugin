@@ -60,7 +60,7 @@ import java.util.List;
                         throw new RuntimeException("Could not find printers");
                        }
                    } catch (Exception e) {
-                       throw new RuntimeException("Zebra plugin exception: " + e.getLocalizedMessage());
+                       throw new RuntimeException("Zebra plugin exception: " + e);
                    }
        }
 
