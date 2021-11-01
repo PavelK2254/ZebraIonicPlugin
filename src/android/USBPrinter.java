@@ -99,7 +99,7 @@ public class USBPrinter extends ZebraPlugin {
         public boolean discoveryComplete = false;
 
         public UsbDiscoveryHandler() {
-            public List<DiscoveredPrinterUsb> currentPrinters = new LinkedList<DiscoveredPrinterUsb>();
+            List<DiscoveredPrinterUsb> currentPrinters = new LinkedList<DiscoveredPrinterUsb>();
             if (currentPrinters != null) {
                 printers = currentPrinters;
             }
