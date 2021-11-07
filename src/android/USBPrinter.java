@@ -29,12 +29,11 @@ import java.util.List;
 public class USBPrinter extends ZebraPlugin {
 
     private DiscoveredPrinterUsb discoveredPrinterUsb;
-    private UsbManager mUsbManager;
-    private PendingIntent mPermissionIntent;
-    public List<DiscoveredPrinterUsb> printers;
-
+    
     public void findPrinters(Context context, final byte[] message) throws RuntimeException {
         // Find connected printers
+        UsbManager mUsbManager;
+        PendingIntent mPermissionIntent;
         UsbDiscoveryHandler handler = new UsbDiscoveryHandler();
         String ACTION_USB_PERMISSION = "com.pk.zebraprintusb.USB_PERMISSION";
         IntentFilter filter = new IntentFilter(ACTION_USB_PERMISSION);
@@ -79,7 +78,7 @@ public class USBPrinter extends ZebraPlugin {
 
     private void printOverUSB(byte[] bitmapByteArray)
             throws ConnectionException, ZebraPrinterLanguageUnknownException, IOException {
-        Connection connection = null;
+        Connection connection;
         connection = discoveredPrinterUsb.getConnection();
         connection.open();
         ZebraPrinter printer = ZebraPrinterFactory.getInstance(connection);
@@ -95,8 +94,9 @@ public class USBPrinter extends ZebraPlugin {
         }
     }
 
-    private class UsbDiscoveryHandler implements DiscoveryHandler {
+    private static class UsbDiscoveryHandler implements DiscoveryHandler {
         public boolean discoveryComplete = false;
+        public List<DiscoveredPrinterUsb> printers;
 
         public UsbDiscoveryHandler() {
             List<DiscoveredPrinterUsb> currentPrinters = new LinkedList<DiscoveredPrinterUsb>();
@@ -115,6 +115,7 @@ public class USBPrinter extends ZebraPlugin {
 
         public void discoveryError(String message) {
             discoveryComplete = true;
+            throw new RuntimeException("discoveryError: " + message);
         }
     }
 }
