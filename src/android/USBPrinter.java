@@ -79,6 +79,7 @@ public class USBPrinter extends ZebraPlugin {
     private void printOverUSB(byte[] bitmapByteArray)
             throws ConnectionException, ZebraPrinterLanguageUnknownException, IOException {
         Connection connection;
+        try {
         connection = discoveredPrinterUsb.getConnection();
         connection.open();
         ZebraPrinter printer = ZebraPrinterFactory.getInstance(connection);
@@ -88,10 +89,21 @@ public class USBPrinter extends ZebraPlugin {
             int width = 0;
             int heigth = 0;
             printer.printImage(getZebraImageFromBitmap(bitmapByteArray), x, y, width, heigth, false);
-            connection.close();
         } else {
             throw new ConnectionException("Could not open connection to a printer");
         }
+        } catch (ConnectionException e) {
+            throw new ConnectionException(e.getMessage() + e.getLocalizedMessage());
+        } finally {
+            if (conn != null) {
+                try {
+                    connection.close();
+                } catch (ConnectionException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        
     }
 
     private static class UsbDiscoveryHandler implements DiscoveryHandler {
