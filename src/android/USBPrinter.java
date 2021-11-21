@@ -36,7 +36,6 @@ public class USBPrinter extends ZebraPlugin {
         PendingIntent mPermissionIntent;
         UsbDiscoveryHandler handler = new UsbDiscoveryHandler();
         String ACTION_USB_PERMISSION = "com.pk.zebraprintusb.USB_PERMISSION";
-        IntentFilter filter = new IntentFilter(ACTION_USB_PERMISSION);
         mUsbManager = (UsbManager) context.getSystemService(Context.USB_SERVICE);
         UsbDiscoverer.findPrinters(context.getApplicationContext(), handler);
         mPermissionIntent = PendingIntent.getBroadcast(context, 0, new Intent(ACTION_USB_PERMISSION), 0);
@@ -50,11 +49,13 @@ public class USBPrinter extends ZebraPlugin {
                     if (printer != null)
                         discoveredPrinterUsb = printer;
                 });
-                if (!mUsbManager.hasPermission(discoveredPrinterUsb.device)) {
+                if (mUsbManager.hasPermission(discoveredPrinterUsb.device)) {
+                    printOverUSB(message);
+                }else{
                     // throw new RuntimeException("No permission for USB");
                     mUsbManager.requestPermission(discoveredPrinterUsb.device, mPermissionIntent);
                 }
-                printOverUSB(message);
+               
 
             } else {
                 throw new RuntimeException("Could not find printers");
