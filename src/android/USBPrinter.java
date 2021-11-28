@@ -27,7 +27,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class USBPrinter extends ZebraPlugin {
-    
+
     public void findPrinters(Context context, final byte[] message) throws RuntimeException {
         // Find connected printers
         UsbManager mUsbManager;
@@ -43,24 +43,21 @@ public class USBPrinter extends ZebraPlugin {
             }
 
             if (handler.printers != null && handler.printers.size() > 0) {
-                handler.printers.forEach(printer -> {
-                    if (printer != null){
-                        //discoveredPrinterUsb = printer;
-                        if (mUsbManager.hasPermission(printer.device)) {
+                        if (mUsbManager.hasPermission(handler.printers.get(0).device)) {
                             try {
-                                printOverUSB(message,printer);
+                                printOverUSB(message,handler.printers.get(0));
                             } catch (Exception e) {
                                 throw new RuntimeException("Zebra plugin exception: " + e);
                             }
-                            
+
                         }else{
                             // throw new RuntimeException("No permission for USB");
-                            mUsbManager.requestPermission(printer.device, mPermissionIntent);
+                            mUsbManager.requestPermission(handler.printers.get(0).device, mPermissionIntent);
                         }
-                    }
-                });
-                
-               
+
+
+
+
 
             } else {
                 throw new RuntimeException("Could not find printers");
@@ -86,17 +83,17 @@ public class USBPrinter extends ZebraPlugin {
             throws ConnectionException, ZebraPrinterLanguageUnknownException, IOException {
         Connection connection = discoveredPrinterUsb.getConnection();
         try {
-        connection.open();
-        ZebraPrinter printer = ZebraPrinterFactory.getInstance(connection);
-        if (connection.isConnected()) {
-            int x = 10;
-            int y = 10;
-            int width = 0;
-            int heigth = 0;
-          //  printer.printImage(getZebraImageFromBitmap(bitmapByteArray), x, y, width, heigth, false);
-        } else {
-            throw new ConnectionException("Could not open connection to a printer");
-        }
+            connection.open();
+            ZebraPrinter printer = ZebraPrinterFactory.getInstance(connection);
+            if (connection.isConnected()) {
+                int x = 10;
+                int y = 10;
+                int width = 0;
+                int heigth = 0;
+                printer.printImage(getZebraImageFromBitmap(bitmapByteArray), x, y, width, heigth, false);
+            } else {
+                throw new ConnectionException("Could not open connection to a printer");
+            }
         } catch (ConnectionException e) {
             throw new ConnectionException(e.getMessage() + e.getLocalizedMessage());
         } finally {
@@ -108,7 +105,7 @@ public class USBPrinter extends ZebraPlugin {
                 }
             }
         }
-        
+
     }
 
     private static class UsbDiscoveryHandler implements DiscoveryHandler {
@@ -116,10 +113,7 @@ public class USBPrinter extends ZebraPlugin {
         public List<DiscoveredPrinterUsb> printers;
 
         public UsbDiscoveryHandler() {
-            List<DiscoveredPrinterUsb> currentPrinters = new LinkedList<DiscoveredPrinterUsb>();
-            if (currentPrinters != null) {
-                printers = currentPrinters;
-            }
+            printers = new LinkedList<>();
         }
 
         public void foundPrinter(final DiscoveredPrinter printer) {
