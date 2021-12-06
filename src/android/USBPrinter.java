@@ -43,17 +43,17 @@ public class USBPrinter extends ZebraPlugin {
             }
 
             if (handler.printers != null && handler.printers.size() > 0) {
-                        if (mUsbManager.hasPermission(handler.printers.get(0).device)) {
-                            try {
-                                printOverUSB(message,handler.printers.get(0));
-                            } catch (Exception e) {
-                                throw new RuntimeException("Zebra plugin exception: " + e);
-                            }
+                if (mUsbManager.hasPermission(handler.printers.get(0).device)) {
+                    try {
+                        printOverUSB(message,handler.printers.get(0));
+                    } catch (Exception e) {
+                        throw new RuntimeException("Zebra plugin exception: " + Arrays.toString(e.getStackTrace()));
+                    }
 
-                        }else{
-                            // throw new RuntimeException("No permission for USB");
-                            mUsbManager.requestPermission(handler.printers.get(0).device, mPermissionIntent);
-                        }
+                }else{
+                    // throw new RuntimeException("No permission for USB");
+                    mUsbManager.requestPermission(handler.printers.get(0).device, mPermissionIntent);
+                }
 
 
 
@@ -85,6 +85,7 @@ public class USBPrinter extends ZebraPlugin {
         try {
             connection.open();
             ZebraPrinter printer = ZebraPrinterFactory.getInstance(connection);
+            System.out.println("Printer status:" + printer.getCurrentStatus().toString());
             if (connection.isConnected()) {
                 int x = 10;
                 int y = 10;
