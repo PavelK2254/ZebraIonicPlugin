@@ -83,10 +83,22 @@ public class USBPrinter extends ZebraPlugin {
             throws ConnectionException, ZebraPrinterLanguageUnknownException, IOException {
         Connection connection = discoveredPrinterUsb.getConnection();
         try {
+            if(connection == null){
+                throw new RuntimeException("Connection is NULL");
+            }
             connection.open();
-            ZebraPrinter printer = ZebraPrinterFactory.getInstance(connection);
-            System.out.println("Printer status:" + printer.getCurrentStatus().toString());
             if (connection.isConnected()) {
+                ZebraPrinter printer = null;
+                try {
+                    printer = ZebraPrinterFactory.getInstance(connection);
+                } catch (ConnectionException e) {
+                    e.printStackTrace();
+                    throw new ConnectionException(e);
+                } catch (ZebraPrinterLanguageUnknownException e) {
+                    e.printStackTrace();
+                    throw new ZebraPrinterLanguageUnknownException(e.getMessage());
+                }
+                System.out.println("Printer status:" + printer.getCurrentStatus().toString());
                 int x = 10;
                 int y = 10;
                 int width = 0;
