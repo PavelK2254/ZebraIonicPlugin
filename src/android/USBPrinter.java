@@ -76,7 +76,7 @@ public class USBPrinter extends ZebraPlugin {
     }
 
     private void printOverUSB(byte[] bitmapByteArray, DiscoveredPrinterUsb discoveredPrinterUsb)
-            throws ConnectionException, ZebraPrinterLanguageUnknownException, IOException {
+            throws ConnectionException, ZebraPrinterLanguageUnknownException, IOException, RuntimeException {
         Connection connection = discoveredPrinterUsb.getConnection();
         try {
             if (connection == null) {
