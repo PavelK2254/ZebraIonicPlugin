@@ -28,6 +28,8 @@ import java.util.List;
 
 public class USBPrinter extends ZebraPlugin {
 
+    DiscoveredPrinterUsb discoveredPrinterUsb;
+
     public void findPrinters(Context context, final byte[] message) throws RuntimeException {
         // Find connected printers
         UsbManager mUsbManager;
@@ -43,9 +45,10 @@ public class USBPrinter extends ZebraPlugin {
             }
 
             if (handler.printers != null && handler.printers.size() > 0) {
-                if (mUsbManager.hasPermission(handler.printers.get(0).device)) {
+                discoveredPrinterUsb = handler.printers.get(0);
+                if (mUsbManager.hasPermission(discoveredPrinterUsb.device)) {
                     try {
-                        printOverUSB(message, handler.printers.get(0));
+                        printOverUSB(message);
                     } catch (Exception e) {
                         throw new RuntimeException("Zebra plugin exception: " + Arrays.toString(e.getStackTrace()));
                     }
@@ -75,13 +78,11 @@ public class USBPrinter extends ZebraPlugin {
         return ZebraImageFactory.getImage(mBitmap);
     }
 
-    private void printOverUSB(byte[] bitmapByteArray, DiscoveredPrinterUsb discoveredPrinterUsb)
+    private void printOverUSB(byte[] bitmapByteArray)
             throws ConnectionException, ZebraPrinterLanguageUnknownException, IOException, RuntimeException {
-        Connection connection = discoveredPrinterUsb.getConnection();
+        Connection connection = null;
         try {
-            if (connection == null) {
-                throw new RuntimeException("Connection is NULL");
-            }
+            connection = discoveredPrinterUsb.getConnection();
             connection.open();
             if (connection.isConnected()) {
                 ZebraPrinter printer = null;
