@@ -45,19 +45,15 @@ public class USBPrinter extends ZebraPlugin {
             if (handler.printers != null && handler.printers.size() > 0) {
                 if (mUsbManager.hasPermission(handler.printers.get(0).device)) {
                     try {
-                        printOverUSB(message,handler.printers.get(0));
+                        printOverUSB(message, handler.printers.get(0));
                     } catch (Exception e) {
                         throw new RuntimeException("Zebra plugin exception: " + Arrays.toString(e.getStackTrace()));
                     }
 
-                }else{
+                } else {
                     // throw new RuntimeException("No permission for USB");
                     mUsbManager.requestPermission(handler.printers.get(0).device, mPermissionIntent);
                 }
-
-
-
-
 
             } else {
                 throw new RuntimeException("Could not find printers");
@@ -79,11 +75,11 @@ public class USBPrinter extends ZebraPlugin {
         return ZebraImageFactory.getImage(mBitmap);
     }
 
-    private void printOverUSB(byte[] bitmapByteArray,DiscoveredPrinterUsb discoveredPrinterUsb)
+    private void printOverUSB(byte[] bitmapByteArray, DiscoveredPrinterUsb discoveredPrinterUsb)
             throws ConnectionException, ZebraPrinterLanguageUnknownException, IOException {
         Connection connection = discoveredPrinterUsb.getConnection();
         try {
-            if(connection == null){
+            if (connection == null) {
                 throw new RuntimeException("Connection is NULL");
             }
             connection.open();
@@ -107,8 +103,6 @@ public class USBPrinter extends ZebraPlugin {
             } else {
                 throw new ConnectionException("Could not open connection to a printer");
             }
-        } catch (ConnectionException e) {
-            throw new ConnectionException(e.getMessage() + e.getLocalizedMessage());
         } finally {
             if (connection != null) {
                 try {
